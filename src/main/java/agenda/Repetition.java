@@ -20,9 +20,12 @@ public class Repetition {
      * </UL>
      */
     private final ChronoUnit myFrequency;
+    private Termination myTermination;
+    private ArrayList<LocalDate> myExceptionDates;
 
     public Repetition(ChronoUnit myFrequency) {
         this.myFrequency = myFrequency;
+        this.myExceptionDates = new ArrayList<>();
     }
 
     /**
@@ -30,17 +33,23 @@ public class Repetition {
      * @param date un date à laquelle l'événement ne doit pas se répéter
      */
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        myExceptionDates.add(date);
     }
 
     /**
      * La terminaison d'une répétition (optionnelle)
      * @param termination la terminaison de la répétition
      */
-    public void setTermination(Termination termination) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+    public void setMyTermination(Termination termination) {
+        this.myTermination = termination;
+    }
 
+    public Termination getMyTermination() {
+        return myTermination;
+    }
+
+    // Getter liste exception
+    public ArrayList<LocalDate> getMyExceptionDates() {
+        return myExceptionDates;
     }
 }

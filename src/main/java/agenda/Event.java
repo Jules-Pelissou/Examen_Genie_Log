@@ -1,6 +1,7 @@
 package agenda;
 
 import java.time.*;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Event {
@@ -20,6 +21,10 @@ public class Event {
      */
     private Duration myDuration;
 
+    /**
+     * Repetition of the event
+     */
+    private Repetition myRepetition;
 
     /**
      * Constructs an event
@@ -35,17 +40,15 @@ public class Event {
     }
 
     public void setRepetition(ChronoUnit frequency) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.myRepetition = new Repetition(frequency);
     }
 
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        myRepetition.addException(date);
     }
 
     public void setTermination(LocalDate terminationInclusive) {
-        // TODO : implémenter cette méthode
+        //Termination t = new Termination()
         throw new UnsupportedOperationException("Pas encore implémenté");
     }
 
@@ -71,8 +74,18 @@ public class Event {
      * @return true if the event occurs on that day, false otherwise
      */
     public boolean isInDay(LocalDate aDay) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        if (myRepetition !=null && myRepetition.getFrequency() == ChronoUnit.DAYS && !myRepetition.getMyExceptionDates().contains(aDay)) {
+            return true;
+        } else if (myRepetition.getMyExceptionDates().contains(aDay)) {
+            return false;
+        }
+
+        if ( aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
+                return false;
+            }else{
+                return true;
+            }
+        }
     }
    
     /**
