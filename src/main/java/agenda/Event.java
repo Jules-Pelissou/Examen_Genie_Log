@@ -25,6 +25,7 @@ public class Event {
      * Repetition of the event
      */
     private Repetition myRepetition;
+    private Termination myTermination;
 
     /**
      * Constructs an event
@@ -37,6 +38,8 @@ public class Event {
         this.myTitle = title;
         this.myStart = start;
         this.myDuration = duration;
+        this.myRepetition = null;
+        this.myTermination = null;
     }
 
     public void setRepetition(ChronoUnit frequency) {
@@ -48,23 +51,21 @@ public class Event {
     }
 
     public void setTermination(LocalDate terminationInclusive) {
-        //Termination t = new Termination()
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        Termination t = new Termination(myStart.toLocalDate(), myRepetition.getFrequency(), terminationInclusive);
+        myTermination = t;
     }
 
     public void setTermination(long numberOfOccurrences) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        Termination t = new Termination(myStart.toLocalDate(), myRepetition.getFrequency(), numberOfOccurrences);
+        myTermination = t;
     }
 
     public int getNumberOfOccurrences() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        return (int) myTermination.numberOfOccurrences();
     }
 
     public LocalDate getTerminationDate() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        return myTermination.terminationDateInclusive();
     }
 
     /**
@@ -74,10 +75,25 @@ public class Event {
      * @return true if the event occurs on that day, false otherwise
      */
     public boolean isInDay(LocalDate aDay) {
-        if (myRepetition !=null && myRepetition.getFrequency() == ChronoUnit.DAYS && !myRepetition.getMyExceptionDates().contains(aDay)) {
+
+        if (myRepetition !=null && myRepetition.getFrequency() == ChronoUnit.DAYS && !myRepetition.getMyExceptionDates().contains(aDay) && aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
             return true;
-        } else if (myRepetition.getMyExceptionDates().contains(aDay)) {
-            return false;
+        } else {
+            if ( myRepetition !=null && myRepetition.getMyExceptionDates().contains(aDay)) {
+                return false;
+            }
+        }
+
+        if (myTermination != null && myTermination.terminationDateInclusive().equals(aDay)) {
+            return true;
+        }
+
+        if (myRepetition !=null && myTermination != null && myRepetition.getFrequency() == ChronoUnit.WEEKS && !myRepetition.getMyExceptionDates().contains(aDay) && aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
+            return true;
+        } else {
+            if ( myRepetition !=null && myRepetition.getMyExceptionDates().contains(aDay)) {
+                return false;
+            }
         }
 
         if ( aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
