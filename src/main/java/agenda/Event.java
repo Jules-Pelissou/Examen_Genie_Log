@@ -76,6 +76,14 @@ public class Event {
      */
     public boolean isInDay(LocalDate aDay) {
 
+        if ( myRepetition == null && myTermination == null &&aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))) {
+            return false;
+        }
+
+        if (aDay.isBefore(ChronoLocalDate.from(myStart)) || myRepetition !=null && aDay.isBefore(ChronoLocalDate.from(myStart)) || myTermination != null && aDay.isBefore(ChronoLocalDate.from(myStart))){
+            return false;
+        }
+
         if (myRepetition !=null && myRepetition.getFrequency() == ChronoUnit.DAYS && !myRepetition.getMyExceptionDates().contains(aDay) && aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
             return true;
         } else {
@@ -96,11 +104,10 @@ public class Event {
             }
         }
 
-        if ( aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
-            return false;
-        }else{
-            return true;
-        }
+
+
+        return true;
+
     }
    
     /**
