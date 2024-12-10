@@ -1,2 +1,12 @@
 Ecrire ici votre réponse à la question UML.
 
+Un avantage clair se dégage de l'UML 1 (Uml nommé uml.svg), en effet, contrairement à l'UML 2 (other.png), l'UML 1 est formé grâce à des compositions.
+Ces compositions sont à tous les niveaux, l'élément principal étant l'Agenda. Ces différentes compositions font en sorte que si l'on supprime l'agenda, l'on supprime alors tous les évènements à l'intérieur.
+Ces suppressions en cascade font, selon moi, plus de sens.
+Dans le second diagramme UML, les différents "types" d'évènement sont hérités par une classe évènement principale. De plus, selon le diagramme UML, la classe évènement ne connait pas l'agenda auquel elle est attribuée.
+En effet, dans le diagramme une flèche indiquant que seul l'agenda connaît ces évènements est représentées.
+Le seul avantage que cela procure est le fait qu'un évènement peut être global et ne le force pas à être attribué a un seul agenda.
+
+Un autre problème de l'héritage est le fait que si un évènement n'a pas de répétition ni de date de termination alors toutes les méthodes et attributs hérités des classes filles ne servent à rien mais sont quand même présents.
+
+Un problème que j'ai trouvé sur les deux diagramme est l'absence de certains attributs qui pour moi sont essentiels. Certains attributs de stockage de données manquent, tels que les Répétitions ou les Terminations dans les évènements.
