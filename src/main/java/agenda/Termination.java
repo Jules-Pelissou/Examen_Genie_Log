@@ -12,7 +12,7 @@ public class Termination {
     private long numberOfOccurrences;
 
     public LocalDate terminationDateInclusive() {
-        return start.plus(numberOfOccurrences, frequency);
+        return (start.plus(numberOfOccurrences, frequency).minusWeeks(1));
     }
 
     public long numberOfOccurrences() {

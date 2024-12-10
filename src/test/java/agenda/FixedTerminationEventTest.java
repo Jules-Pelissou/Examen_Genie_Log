@@ -52,10 +52,9 @@ public class FixedTerminationEventTest {
 
     @Test
     public void canCalculateTerminationDateFromNumberOfOccurrences() {
-        // Il y avait une erreur selon moi dans le test (1er Novembre 2020 + 10 semaines => 10 Janvier 2021 et non le 3)
-        LocalDate termination = LocalDate.of(2021,1, 10);
+        LocalDate termination = LocalDate.of(2021,1, 3);
         assertEquals(termination, fixedRepetitions.getTerminationDate(),
-                "Cet événement doit se terminer le 10 janvier");
+                "Cet événement doit se terminer le 3 janvier");
     }
 
     @Test
