@@ -81,10 +81,9 @@ public class Event {
         }
 
         if ( aDay.isAfter(ChronoLocalDate.from(myStart.plus(myDuration)))  || aDay.isBefore(ChronoLocalDate.from(myStart))) {
-                return false;
-            }else{
-                return true;
-            }
+            return false;
+        }else{
+            return true;
         }
     }
    
